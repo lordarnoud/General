@@ -4,7 +4,6 @@ import java.awt.AWTException;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Image;
-import java.awt.MouseInfo;
 import java.awt.Rectangle;
 import java.awt.Robot;
 import java.awt.Toolkit;
@@ -14,7 +13,6 @@ import java.util.concurrent.TimeUnit;
 
 import javax.imageio.ImageIO;
 
-
 import com.xuggle.mediatool.IMediaWriter;
 import com.xuggle.mediatool.ToolFactory;
 import com.xuggle.xuggler.ICodec;
@@ -22,36 +20,28 @@ import com.xuggle.xuggler.ICodec;
 public class ScreenCaptureXuggler {
 
     private static final double FRAME_RATE = 5;
-
     private static final int SECONDS_TO_RUN_FOR = 120;
-
-    private static final String outputFilename = "c:/mydesktop.mp4";
-
+    private static final String OUTPUT_FILENAME = "E:\\Netbeans Projects\\General\\General\\src\\main\\resources\\media\\XugglerRecording.mp4";
     private static Dimension screenBounds;
-
-    private static Graphics2D imageGraphics;
-
     public static Image m_MouseIcon = null;
 
     public static void main(String[] args) {
-
         // let's make a IMediaWriter to write the file.
-        final IMediaWriter writer = ToolFactory.makeWriter(outputFilename);
+        final IMediaWriter writer = ToolFactory.makeWriter(OUTPUT_FILENAME);
 
         screenBounds = Toolkit.getDefaultToolkit().getScreenSize();
 
         // We tell it we're going to add one video stream, with id 0,
         // at position 0, and that it will have a fixed frame rate of FRAME_RATE.
-        writer.addVideoStream(0, 0, ICodec.ID.CODEC_ID_MPEG4, screenBounds.width/2, screenBounds.height/2);
+        writer.addVideoStream(0, 0, ICodec.ID.CODEC_ID_MPEG4, screenBounds.width / 2, screenBounds.height / 2);
 
         long startTime = System.nanoTime();
-
+        /**
         try {
             m_MouseIcon = ImageIO.read(ScreenCaptureXuggler.class.getResource("resource/captionMouseIcon.png"));
-        } catch (IOException e1) {
-            // TODO Auto-generated catch block
-            e1.printStackTrace();
-        }
+        } catch (IOException e) {
+            System.out.println("Error: " + e);
+        } */
 
         for (int index = 0; index < SECONDS_TO_RUN_FOR * FRAME_RATE; index++) {
 
@@ -67,8 +57,7 @@ public class ScreenCaptureXuggler {
             // sleep for frame rate milliseconds
             try {
                 Thread.sleep((long) (1000 / FRAME_RATE));
-            } 
-            catch (InterruptedException e) {
+            } catch (InterruptedException e) {
                 // ignore
             }
 
@@ -80,14 +69,12 @@ public class ScreenCaptureXuggler {
     }
 
     public static BufferedImage convertToType(BufferedImage sourceImage, int targetType) {
-
         BufferedImage image;
 
         // if the source image is already the target type, return the source image
         if (sourceImage.getType() == targetType) {
             image = sourceImage;
-        }
-        // otherwise create a new image of the target type and draw the new image
+        } // otherwise create a new image of the target type and draw the new image
         else {
             image = new BufferedImage(sourceImage.getWidth(), sourceImage.getHeight(), targetType);
             image.getGraphics().drawImage(sourceImage, 0, 0, null);
@@ -102,12 +89,9 @@ public class ScreenCaptureXuggler {
             Robot robot = new Robot();
             Rectangle captureSize = new Rectangle(screenBounds);
             return robot.createScreenCapture(captureSize);
-        } 
-        catch (AWTException e) {
-            e.printStackTrace();
+        } catch (AWTException e) {
+            System.out.println("Error: " + e);
             return null;
         }
-
     }
-
 }

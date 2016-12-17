@@ -18,6 +18,7 @@
             <id>xuggle repo</id>
             <url>https://files.liferay.com/mirrors/xuggle.googlecode.com/svn/trunk/repo/share/java/</url>
         </repository>
+        <!-- This is for the ScreenCapture Xuggler, keep in mind  this is not supported anymore -->
     </repositories>
 
 
@@ -28,6 +29,14 @@
             <groupId>xuggle</groupId>
             <artifactId>xuggle-xuggler</artifactId>
             <version>5.4</version>
+            <scope>compile</scope>
         </dependency>
+        
+        <dependency> 
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>1.7.22</version>
+        </dependency>        
+        <!-- This is for the ScreenCapture Xuggler, keep in mind  this is not supported anymore -->
     </dependencies>
 </project>
