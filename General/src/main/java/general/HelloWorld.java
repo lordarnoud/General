@@ -1,4 +1,4 @@
-package lordarnoud.general;
+package general;
 
 public class HelloWorld {
     
